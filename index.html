@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery.min.js"></script>
+    <title>Ui</title>
+</head>
+<body>
+    <section>
+        <div>
+            <form method="get" id="ajax_form" action="" >
+                <input type="text" value="1" id="from" placeholder="from" /><br>
+                <input type="text" value="10" id="to" placeholder="to" /><br>
+                <input type="button" id="btn" value="Отправить" />
+            </form>
+            <div id="result_form"></div>
+        </div>
+    </section>
+    <script>
+        $( document ).ready(function() {
+                $("#btn").click(
+                    function(){
+                        let from = parseInt($("#from").val());
+                        let to = parseInt($("#to").val());
+                        if (!isNaN(from) && !isNaN(to)) {
+                        sendApi(from, to);
+                        return false;
+                        } else {
+                            $('#result_form').html('Ошибка. Не верные параметры запроса. Форма не отправлена');
+                        }
+                    }
+                );
+        });
+        function sendApi(from, to) {
+            $.ajax({
+                url:     '/fibanacci',
+                type:     "GET", //метод отправки
+                data: {'from': from, 'to': to},  // Сеарилизуем объект
+                success: function(response) { //Данные отправлены успешно
+                   if (response.error == null) {
+                       $('#result_form').html(response);
+                   } else {
+                       $('#result_form').html('Сервер вернул ошибку. (' + response.error + ')');
+                   }
+                },
+                error: function(response) { // Данные не отправлены
+                    $('#result_form').html('Ошибка сервиса.' + response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
