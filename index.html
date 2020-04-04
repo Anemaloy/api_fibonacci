@@ -10,14 +10,13 @@
 </head>
 <body>
     <section>
-        <div>
-            <form method="get" id="ajax_form" action="" >
-                <input type="text" value="1" id="from" placeholder="from" /><br>
-                <input type="text" value="10" id="to" placeholder="to" /><br>
-                <input type="button" id="btn" value="Отправить" />
-            </form>
-            <div id="result_form"></div>
+        <h2 align="center">для получения среза чисел введите промежуток от-до</h2>
+        <div style="margin: 100px auto 50px; width: 70%; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 30px">
+            <input type="text" value="1" id="from" placeholder="from" />
+            <input type="text" value="10" id="to" placeholder="to" />
+            <input type="button" id="btn" value="получить срез" />
         </div>
+        <div style="width: 100%;  display: flex; justify-content: center;" id="result_form"></div>
     </section>
     <script>
         $( document ).ready(function() {
@@ -41,7 +40,7 @@
                 data: {'from': from, 'to': to},  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                    if (response.error == null) {
-                       $('#result_form').html(response);
+                       $('#result_form').html('<h3>' + response + '</h3>');
                    } else {
                        $('#result_form').html('Сервер вернул ошибку. (' + response.error + ')');
                    }
